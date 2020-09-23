@@ -2,7 +2,8 @@ import React from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle,Breadcrumb,BreadcrumbItem } from 'reactstrap';
 import {Link} from 'react-router-dom';
 import CommentForm  from './CommentFormComponent';
-    function RenderDish({dish}) {
+
+     function RenderDish({dish}) {
         return (
             <Card>
                 <CardImg width="100%" src={dish.image} alt={dish.name} />
@@ -14,7 +15,7 @@ import CommentForm  from './CommentFormComponent';
         );
     }
 
-    function RenderComments({comments}) {
+    function RenderComments({comments,addComment,dishId}) {
         var commentList = comments.map(comment => {
             return (
                 <li key={comment.id} >
@@ -23,6 +24,7 @@ import CommentForm  from './CommentFormComponent';
                     -- {comment.author}, {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}
                     <br /><br />
                 </li>
+                
             );
         });
 
@@ -32,6 +34,7 @@ import CommentForm  from './CommentFormComponent';
                 <ul className="list-unstyled">
                     {commentList}
                 </ul>
+                <CommentForm dishId={dishId} addComment={addComment} />
             </div>
         );
     }
@@ -54,8 +57,8 @@ import CommentForm  from './CommentFormComponent';
                             <RenderDish dish={props.dish} />
                         </div>
                         <div className="col-12 col-md-5 m-1">                
-                            <RenderComments comments ={props.comments} />
-                            <CommentForm/>
+                            <RenderComments comments ={props.comments}  addComment={props.addComment} dishId= {props.dish.id}/>
+                           
                         </div>
                     </div>
                     </div>

@@ -22,8 +22,9 @@ class CommentForm extends Component{
     }
     handleSubmit(values){
         this.toggleModal()
+        this.props.addComment(this.props.dishId,values.rating,values.author,values.comment)
         console.log("Current State is:"+JSON.stringify(values));
-alert("Current State is:"+JSON.stringify(values));
+        //alert("Current State is:"+JSON.stringify(values));
     }
    
     render(){
@@ -41,9 +42,7 @@ alert("Current State is:"+JSON.stringify(values));
                             <Label htmlfor="rating"> Rating </Label>
                             <Col md={12}>
                             <Control.select model=".rating" id="rating" className="form-control  text-center" name="rating" placeholder="Rating"
-                              validators={{
-                                  required
-                              }} >
+                              >
                                   <option>1</option>
                                   <option>2</option>
                                   <option>3</option>
@@ -51,25 +50,19 @@ alert("Current State is:"+JSON.stringify(values));
                                   <option>5</option>
                                   </Control.select>  
                               
-                              
-                            
-                           <Errors className="text-danger"
-                           model=".rating" show="touched"
-                           messages={{
-                               required: 'Required'
-                           }}
-                           />
+                           
+                         
                             </Col>
                             </Row>
                             <Row className="form-group">
                             <Label htmlfor="name"> Your Name </Label>
                             <Col md={12}>
-                            <Control.text model=".name" id="name" className="form-control" name="name" placeholder="name"
+                            <Control.text model=".author" id="author" className="form-control" name="name" placeholder="name"
                               validators={{
                                   required,minLength:minLength(3),maxLength:maxLength(15)
                               }}    />
                            <Errors className="text-danger"
-                           model=".name" show="touched"
+                           model=".author" show="touched"
                            messages={{
                                required: 'Required',
                                minLength:"Must be greater than 2 characters",
