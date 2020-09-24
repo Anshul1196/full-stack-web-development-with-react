@@ -6,11 +6,11 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent';
-import { actions } from 'react-redux-form';
+
 import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { addComment, fetchComments, fetchDishes, fetchPromos } from '../redux/ActionCreators';
-
+import { addComment, fetchDishes, fetchComments, fetchPromos } from '../redux/ActionCreators';
+import { actions } from 'react-redux-form';
 
 const mapStateToProps = state => {
     return {
@@ -24,9 +24,10 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch) => ({
     addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
     fetchDishes: () => { dispatch(fetchDishes()) },
-    resetFeedbackForm:() => {dispatch(actions.reset('feedback'))},
+    resetFeedbackForm: () => { dispatch(actions.reset('feedback'))},
+    fetchPromos: () => { dispatch(fetchPromos()) },
     fetchComments: () => { dispatch(fetchComments()) },
-    fetchPromos: () => { dispatch(fetchPromos()) }
+
 });
 
 class Main extends Component {
@@ -41,7 +42,6 @@ class Main extends Component {
     }
 
     render() {
-
         const HomePage = () => {
             return (
                 <Home dish={this.props.dishes.dishes.filter(dish => dish.featured)[0]}
@@ -61,7 +61,7 @@ class Main extends Component {
                     dish={this.props.dishes.dishes.filter(dish => dish.id === parseInt(match.params.dishId, 10))[0]}
                     isLoading={this.props.dishes.isLoading}
                     errMess={this.props.dishes.errMess}
-                    comments={this.props.comments.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}                
+                    comments={this.props.comments.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
                     commentsErrMess={this.props.comments.errMess}
                     addComment={this.props.addComment}
                 />
